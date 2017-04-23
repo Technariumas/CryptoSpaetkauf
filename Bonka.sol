@@ -1,4 +1,4 @@
-pragma solidity ^0.4.0
+pragma solidity ^0.4.0;
 
 contract mortal {
 	address owner;
@@ -15,14 +15,12 @@ contract mortal {
 contract bonkaContract is mortal {
 	string bonkaName; /* Bottle brand */
 	uint public bonkaPrice; 
-	string lenderCoords;
-	string borrowerCoords;
+	string lenderCoords; /* Physical coords where bottle will be transferred to courier */
+	string borrowerCoords; /* Physical coords where bottle will be delivered */
 	address lenderWalletAddress;
 	address courierWalletAddress;
 	address borrowerWalletAddress;
 	string status;
-	
-	
 	
     function commitToBorrow(string borrowerCoords, uint transportFee)
     public
@@ -32,7 +30,7 @@ contract bonkaContract is mortal {
         if (msg.value < bonkaPrice+transportFee) throw;
         borrowerWalletAddress = msg.sender;
         start = block.timestamp;
-        status = "borrowing"
+        status = "borrowing";
         return (new TransportContract).value(transportFee) (lenderCoords, borrowerCoords, this.address);
     }	
 
@@ -54,7 +52,7 @@ contract bonkaContract is mortal {
     {
         if (msg.value < bonkaPrice+transportFee) throw;
         lenderWalletAddress = msg.sender;
-        status = "returning"
+        status = "returning";
         return (new TransportContract).value(transportFee) (borrowerCoords, lenderCoords, this.address);
     }
 	
